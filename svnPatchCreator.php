@@ -30,8 +30,8 @@
  */
 require_once('show_status.php');
 
-class svnPatchCreator{
-	function __construct($r=null, $s=null, $e=null, $z=true){
+class svnPatchCreator {
+	function __construct($r=null, $s=null, $e=null, $z=true) {
 		$f = $s.'_'.$e.'.txt';
 		$t = $s.'_'.$e;
 		echo "\nCollect change logs!\n";
@@ -57,7 +57,7 @@ class svnPatchCreator{
 		}
 	}
 
-	function run($r,$f,$t){
+	function run($r,$f,$t) {
 		if(is_file($f)){
 			$nd = $t.'/'.str_replace($r,'',dirname($f));
 			$nf = $t.'/'.str_replace($r,'',$f);
@@ -75,15 +75,13 @@ function arguments($argv) {
       } elseif(ereg('-([a-zA-Z0-9])',$arg,$reg)) {
             $_ARG[$reg[1]] = 'true';
         }
-  
     }
   return $_ARG;
 }
 
-function read ($length='255'){
-	if (!isset ($GLOBALS['StdinPointer']))
-	{
-	$GLOBALS['StdinPointer'] = fopen ("php://stdin","r");
+function read ($length='255') {
+	if (!isset ($GLOBALS['StdinPointer'])) {
+		$GLOBALS['StdinPointer'] = fopen ("php://stdin","r");
 	}
 	$line = fgets ($GLOBALS['StdinPointer'],$length);
 	return trim ($line);
@@ -104,7 +102,7 @@ if (php_sapi_name() == "cli") {
 		$e = read();
 	}
 
-	if(empty($r) || empty($s) || empty($e)){
+	if(empty($r) || empty($s) || empty($e)) {
 		echo "\nParameter required : --r=? --s=? --e=?\n";
 		exit();
 	}else{
