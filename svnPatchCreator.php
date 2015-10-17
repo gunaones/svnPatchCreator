@@ -89,24 +89,28 @@ function read ($length='255'){
 	return trim ($line);
 } 	
 
-$arg = arguments($argv);
-if(count($arg)==3){
-	$r = @$arg['r'];
-	$s = @$arg['s'];
-	$e = @$arg['e'];
-}else{
-	echo "Enter \"existing svn working copy\" ? ";
-	$r = read();
-	echo "\nRevision start? ";
-	$s = read();
-	echo "\nRevision end? ";
-	$e = read();
-}
+if (php_sapi_name() == "cli") {
+	$arg = arguments($argv);
+	if(count($arg)==3){
+		$r = @$arg['r'];
+		$s = @$arg['s'];
+		$e = @$arg['e'];
+	}else{
+		echo "Enter \"existing svn working copy\" ? ";
+		$r = read();
+		echo "\nRevision start? ";
+		$s = read();
+		echo "\nRevision end? ";
+		$e = read();
+	}
 
-if(empty($r) || empty($s) || empty($e)){
-	echo "\nParameter required : --r=? --s=? --e=?\n";
-	exit();
-}else{
-	echo "\nCreate Patch ready!...";
+	if(empty($r) || empty($s) || empty($e)){
+		echo "\nParameter required : --r=? --s=? --e=?\n";
+		exit();
+	}else{
+		echo "\nCreate Patch ready!...";
+	}
+	new svnPatchCreator($r, $s, $e);
+} else {
+	// Not in cli-mode
 }
-new svnPatchCreator($r, $s, $e);
