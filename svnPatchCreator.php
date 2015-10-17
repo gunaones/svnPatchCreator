@@ -30,8 +30,8 @@
  */
 require_once('show_status.php');
 
-class svnPatchCreator {
-	function __construct($r=null, $s=null, $e=null, $z=true) {
+class svnPatchCreator{
+	function __construct($r=null, $s=null, $e=null, $z=true){
 		$f = $s.'_'.$e.'.txt';
 		$t = $s.'_'.$e;
 		echo "\nCollect change logs!\n";
@@ -57,7 +57,7 @@ class svnPatchCreator {
 		}
 	}
 
-	function run($r,$f,$t) {
+	function run($r,$f,$t){
 		if(is_file($f)){
 			$nd = $t.'/'.str_replace($r,'',dirname($f));
 			$nf = $t.'/'.str_replace($r,'',$f);
@@ -68,20 +68,22 @@ class svnPatchCreator {
 }
 
 function arguments($argv) {
-	$_ARG = array();
-	foreach ($argv as $arg) {
-		if (ereg('--([^=]+)=(.*)',$arg,$reg)) {
-			$_ARG[$reg[1]] = $reg[2];
-		} elseif(ereg('-([a-zA-Z0-9])',$arg,$reg)) {
-			$_ARG[$reg[1]] = 'true';
-		}
-	}
-	return $_ARG;
+    $_ARG = array();
+    foreach ($argv as $arg) {
+      if (ereg('--([^=]+)=(.*)',$arg,$reg)) {
+        $_ARG[$reg[1]] = $reg[2];
+      } elseif(ereg('-([a-zA-Z0-9])',$arg,$reg)) {
+            $_ARG[$reg[1]] = 'true';
+        }
+  
+    }
+  return $_ARG;
 }
 
-function read ($length='255') {
-	if (!isset ($GLOBALS['StdinPointer'])) {
-		$GLOBALS['StdinPointer'] = fopen ("php://stdin","r");
+function read ($length='255'){
+	if (!isset ($GLOBALS['StdinPointer']))
+	{
+	$GLOBALS['StdinPointer'] = fopen ("php://stdin","r");
 	}
 	$line = fgets ($GLOBALS['StdinPointer'],$length);
 	return trim ($line);
@@ -94,15 +96,27 @@ if (php_sapi_name() == "cli") {
 		$s = @$arg['s'];
 		$e = @$arg['e'];
 	}else{
+		r :
 		echo "Enter \"existing svn working copy\" ? ";
 		$r = read();
+		if(empty($r)){
+			goto r;
+		}
+		s :
 		echo "\nRevision start? ";
 		$s = read();
+		if(empty($s)){
+			goto s;
+		}
+		e :
 		echo "\nRevision end? ";
 		$e = read();
+		if(empty($e)){
+			goto e;
+		}
 	}
 
-	if(empty($r) || empty($s) || empty($e)) {
+	if(empty($r) || empty($s) || empty($e)){
 		echo "\nParameter required : --r=? --s=? --e=?\n";
 		exit();
 	}else{
