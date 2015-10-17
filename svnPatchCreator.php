@@ -68,16 +68,15 @@ class svnPatchCreator{
 }
 
 function arguments($argv) {
-    $_ARG = array();
-    foreach ($argv as $arg) {
-      if (ereg('--([^=]+)=(.*)',$arg,$reg)) {
-        $_ARG[$reg[1]] = $reg[2];
-      } elseif(ereg('-([a-zA-Z0-9])',$arg,$reg)) {
-            $_ARG[$reg[1]] = 'true';
-        }
-  
-    }
-  return $_ARG;
+	$_ARG = array();
+	foreach ($argv as $arg) {
+		if (ereg('--([^=]+)=(.*)',$arg,$reg)) {
+			$_ARG[$reg[1]] = $reg[2];
+		} else if(ereg('-([a-zA-Z0-9])',$arg,$reg)) {
+			$_ARG[$reg[1]] = 'true';
+		}
+	}
+	return $_ARG;
 }
 
 function read ($length='255'){
@@ -87,7 +86,7 @@ function read ($length='255'){
 	}
 	$line = fgets ($GLOBALS['StdinPointer'],$length);
 	return trim ($line);
-} 	
+}
 
 if (php_sapi_name() == "cli") {
 	$arg = arguments($argv);
@@ -99,21 +98,18 @@ if (php_sapi_name() == "cli") {
 		r :
 		echo "Enter \"existing svn working copy\" ? ";
 		$r = read();
-		if(empty($r)){
+		if(empty($r))
 			goto r;
-		}
 		s :
 		echo "\nRevision start? ";
 		$s = read();
-		if(empty($s)){
+		if(empty($s))
 			goto s;
-		}
 		e :
 		echo "\nRevision end? ";
 		$e = read();
-		if(empty($e)){
+		if(empty($e))
 			goto e;
-		}
 	}
 
 	if(empty($r) || empty($s) || empty($e)){
